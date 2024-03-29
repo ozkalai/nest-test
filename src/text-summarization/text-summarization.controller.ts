@@ -1,5 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { TextSummarizationService } from './text-summarization.service';
+import { TextDto } from './dtos/text-dto';
 
 @Controller('text-summarization')
 export class TextSummarizationController {
@@ -7,9 +8,9 @@ export class TextSummarizationController {
     private readonly textSummarizationService: TextSummarizationService,
   ) {}
 
-  @Post('summarize')
-  async summarizeText(@Body() body: { text: string }): Promise<string> {
-    const { text } = body;
-    return this.textSummarizationService.summarizeText(text);
+  @Post()
+  async create(@Body() textDto: TextDto) {
+    const { text } = textDto;
+    return await this.textSummarizationService.summarizeText(text);
   }
 }
